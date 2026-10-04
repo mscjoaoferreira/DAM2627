@@ -3,7 +3,7 @@ function App() {
     <div>
       <header>
         <img src="src/assets/react-core-concepts.png" alt="Stylized atom" />
-        <h1>Fundamentos do React - João Ferreira</h1>
+        <h1>Fundamentos do React - Arthur</h1>
         <p>
           Conceitos fundamentais do React de que você precisará para praticamente qualquer aplicativo que for criar!
         </p>
