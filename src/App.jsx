@@ -48,10 +48,17 @@ const ALUNOS = [
   { nome: "Ana", idade: 14},
 ];
 
+/*
 for (let i = 0; i < ALUNOS.length; i++) {
   console.log("Nome: ",ALUNOS[i].nome);
   console.log("Idade: ",ALUNOS[i].idade);
 }
+*/
+const nomes = ALUNOS.map(aluno => aluno.nome);
+console.log("Nomes dos alunos: ", nomes);
+
+const nomes2 = ALUNOS.map(aluno => aluno.nome);
+
 
 //console.log(ALUNOS[0].nome);
 //console.log(ALUNOS[0].idade);
@@ -87,6 +94,29 @@ function App() {
             <CoreConcept3 {...CORE_CONCEPTS[1]} />
             <CoreConcept3 {...CORE_CONCEPTS[2]} />
             <CoreConcept3 {...CORE_CONCEPTS[3]} />
+          </ul>
+        </section>
+        <section id="alunos">
+          <h2>Alunos</h2>
+          <ul>
+            {ALUNOS.map((aluno) => (
+              <li key={aluno.nome}>
+                <h3>{aluno.nome}</h3>
+              </li>
+            ))}
+          </ul> 
+        </section>
+        <section id="core-concepts">
+          <h2>Substituir 4 chamadas por map()</h2>
+          <ul>
+            {CORE_CONCEPTS.map((concept) => (
+              <CoreConcept3 
+              key={concept.title} 
+              title = {concept.title}
+              description = {concept.description}
+              image = {concept.image}
+              />
+            ))}
           </ul>
         </section>
       </main>

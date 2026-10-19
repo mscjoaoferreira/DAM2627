@@ -12,4 +12,6 @@ export const CORE_CONCEPTS = [
     description: 'Permitem passar dados para componentes.' },
   { image: stateImg, title: 'State',
     description: 'Permite gerir dados que mudam na interface.' },
+  { image: componentsImg, title: "Reutilização",
+    description: "Permite utilizar componentes em várias partes."}  
 ];
