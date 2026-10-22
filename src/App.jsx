@@ -3,7 +3,7 @@ function Header() {
   return (
     <header>
       <img src="src/assets/react-core-concepts.png" alt="Stylized atom" />
-      <h1>Fundamentos do React - João Ferreira</h1>
+      <h1>Fundamentos do React - Seu nome</h1>
       <p>
         Conceitos fundamentais do React de que você precisará para praticamente qualquer aplicativo que for criar!
       </p>
@@ -79,7 +79,80 @@ function CoreConcept3({title, description, image}) {
     </li>
   );
 }
+function Botao() {
+  function mostrarMensagem() {
+    alert("Olá! Clicaste no botão.");
+  }
 
+  return (
+    <button onClick={mostrarMensagem}>
+      Clica aqui
+    </button>
+  );
+}
+
+
+
+function Mensagem() {
+  function apresentar() {
+    alert("Bem-vindo à DAM!");
+  }
+
+  return (
+    <button onClick={apresentar}>
+      Mostrar mensagem
+    </button>
+  );
+}
+
+function Saudacoes2() {
+  function saudar() { alert("Olá! Funçao saudações 2!")}
+  function despedir() { alert("Até Breve! Função saudações 2!")}
+
+  return (
+    <div>
+      <button onClick={saudar}> Saudar</button>
+      <button onClick={despedir}> Despedir</button>
+    </div>
+  )
+}
+
+function Saudacoes() {
+  function saudar() { alert("Olá! Função Saudar"); }
+  function despedir() { alert("Até breve! Função Despedir"); }
+
+  return (
+    <div>
+      <button onClick={saudar}>Saudar</button>
+      <button onClick={despedir}>Despedir</button>
+    </div>
+  );
+}
+
+
+const alunos2 = ['Ana', 'Bruno', 'Carla'];
+
+function mostrarConceito(nome) {
+  alert("Selecionaste: " + nome);
+}
+
+function CoreConcept4(props) {
+  function mostrarDetalhes() {
+    alert(props.title + ": " + props.description);
+  }
+
+  return (
+    <li>
+      <img src={props.image} alt={props.title} />
+      <h3>{props.title}</h3>
+      <p>{props.description}</p>
+      <button onClick={mostrarDetalhes}>
+        Ver detalhes
+      </button>
+
+    </li>
+  );
+ }
 
 function App() {
  return (
@@ -87,25 +160,6 @@ function App() {
       <Header />
 
       <main>
-        <section id="core-concepts">
-          <h2>Conceitos fundamentais</h2>
-          <ul>
-            <CoreConcept3 {...CORE_CONCEPTS[0]} />
-            <CoreConcept3 {...CORE_CONCEPTS[1]} />
-            <CoreConcept3 {...CORE_CONCEPTS[2]} />
-            <CoreConcept3 {...CORE_CONCEPTS[3]} />
-          </ul>
-        </section>
-        <section id="alunos">
-          <h2>Alunos</h2>
-          <ul>
-            {ALUNOS.map((aluno) => (
-              <li key={aluno.nome}>
-                <h3>{aluno.nome}</h3>
-              </li>
-            ))}
-          </ul> 
-        </section>
         <section id="core-concepts">
           <h2>Substituir 4 chamadas por map()</h2>
           <ul>
@@ -119,10 +173,68 @@ function App() {
             ))}
           </ul>
         </section>
+        <section>
+          <div>
+            <h1>Exercício 1</h1>
+            <button onClick={() => alert("Bem vindo a DAMMMMM!")}>
+              Mostrar Mensagem!
+            </button>
+          </div>
+        </section>
+        <div>
+          <h1>Exemplo de eventos em React</h1>
+
+          <Botao />
+
+          <button
+          onClick={() => alert("Olá! Sem função externa.")}
+          >
+            Clica aqui 2
+          </button>
+
+        </div>
+        
+        <div>
+          <h1>Exercício 1</h1>
+
+          <Mensagem />
+        </div>
+             
+        <div>
+          <h1>Exercício 2 - Saudações 2</h1>
+
+          <Saudacoes2 />
+        </div>
+
+        <section>
+          <ul>
+            {alunos2.map((aluno) => <li key={aluno}>{aluno}</li>)}
+          </ul>
+        </section>
+        <section>
+          <h1>Exercício 3</h1>
+          <button onClick={() => mostrarConceito("Props")}> 
+            Ver Props
+          </button>
+        </section>
+
+        <section id="core-concepts">
+          <h1>Exercício 4</h1>
+          {CORE_CONCEPTS.map((concept) => (
+            <CoreConcept4 
+              key={concept.title} 
+              title={concept.title}
+              description={concept.description}
+              image={concept.image}
+            />
+          ))}
+        </section>
+
       </main>
     </>
   );
 }
+
 
 
 export default App;
