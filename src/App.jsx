@@ -136,6 +136,19 @@ function mostrarConceito(nome) {
   alert("Selecionaste: " + nome);
 }
 
+function Contador() {
+  let contador = 0;
+
+  function aumentar() {
+    contador = contador + 1;
+    console.log(contador);
+  }
+  return <button onClick={aumentar}>
+    Cliques: {contador}
+  </button>;
+}
+
+
 function CoreConcept4(props) {
   function mostrarDetalhes() {
     alert(props.title + ": " + props.description);
@@ -154,7 +167,182 @@ function CoreConcept4(props) {
   );
  }
 
+import { useState } from 'react';
+
+function FormularioConteudo() {
+  return (
+    <section>
+      <h2>Novo conteúdo</h2>
+      <input type="text" placeholder="Título" />
+    </section>
+  );
+}
+
 function App() {
+
+  function FormularioConteudo0() {
+  return (
+    <section>
+      <h2>Formulário Exemplo1</h2>
+      <input type="text" placeholder="Título" />
+    
+    <input
+      type="text"
+      onChange={(event) => {
+        console.log(event.target.value);
+      }}
+  />
+
+    </section>
+
+  );
+}
+
+function FormularioConteudo() {
+  const [titulo, setTitulo] = useState('');
+  const [descricao, setDescricao] = useState('');
+
+  return (
+    <section>
+      <h2>Novo conteúdo multimédia - Formulários</h2>
+      <label htmlFor="titulo">Título</label>
+      <input id="titulo" value={titulo}
+        onChange={(e) => setTitulo(e.target.value)} />
+      <label htmlFor="descricao">Descrição</label>
+      <textarea id="descricao" value={descricao}
+        onChange={(e) => setDescricao(e.target.value)} />
+      <h3>Pré-visualização</h3>
+      <p>{titulo}</p>
+      <p>{descricao}</p>
+    </section>
+  );
+}
+
+function FormularioMultimedia() {
+  const [nome, setNome] = useState('');
+  const [categoria, setCategoria] = useState('');
+
+  return (
+    <section>
+      <h2>Exercício 2: Formulários</h2>
+      <label htmlFor="nome">Nome</label>
+      <input id="nome" value={nome}
+        onChange={(e) => setNome(e.target.value)} />
+      <label htmlFor="categoria">Categoria</label>
+      <textarea id="categoria" value={categoria}
+        onChange={(e) => setCategoria(e.target.value)} />
+      <h3>Pré-visualização</h3>
+      <p>{nome}</p>
+      <p>{categoria}</p>
+    </section>
+  );
+}
+
+function CatalogoMultimedia() {
+  const [titulo, setTitulo] = useState("");
+  const [tipo, setTipo] = useState("Filme");
+  const [descricao, setDescricao] = useState("");
+
+  return (
+    <section>
+      <h2>Catálogo multimédia</h2>
+
+      <label htmlFor="titulo">Título:</label>
+      <input
+        id="titulo"
+        type="text"
+        value={titulo}
+        onChange={(event) => setTitulo(event.target.value)}
+      />
+
+      <label htmlFor="tipo">Tipo:</label>
+      <select
+        id="tipo"
+        value={tipo}
+        onChange={(event) => setTipo(event.target.value)}
+      >
+        <option value="Filme">Filme</option>
+        <option value="Série">Série</option>
+        <option value="Jogo">Jogo</option>
+        <option value="Livro">Livro</option>
+      </select>
+
+      <label htmlFor="descricao">Descrição:</label>
+      <textarea
+        id="descricao"
+        value={descricao}
+        onChange={(event) => setDescricao(event.target.value)}
+      />
+
+      <h3>Pré-visualização</h3>
+      <p>Título: {titulo}</p>
+      <p>Tipo: {tipo}</p>
+      <p>Descrição: {descricao}</p>
+    </section>
+  );
+}
+
+//Para uso do useState
+  const [contador, setContador] = useState(0);
+
+  function aumentar() {
+    setContador(contador + 1);
+  }
+
+  function diminuir() {
+      setContador(contador - 1);
+  }
+
+function Detalhes() {
+  const [visivel, setVisivel] = useState(false);
+
+  return (
+    <section>
+      <button onClick={() => setVisivel(!visivel)}>
+        Alternar detalhes
+      </button>
+      {visivel && <p>Informação adicional!</p>}
+    </section>
+  );
+}
+
+function Categorias() {
+  const [categoria, setCategoria] = useState('Todas');
+  return (
+    <section>
+      <button onClick={() => setCategoria('Filmes')}>
+        Filmes
+      </button>
+      <button onClick={() => setCategoria('Jogos')}>
+        Jogos
+      </button>
+           <button onClick={() => setCategoria('Aventuras')}>
+        Aventuras
+      </button>
+           <button onClick={() => setCategoria('Europa')}>
+      Europa
+      </button>
+      <p>Categoria selecionada: {categoria}</p>
+    </section>
+  );
+}
+
+const [selecionado, setSelecionado] = useState(null);
+
+function CartaoFavorito({ titulo }) {
+  const [favorito, setFavorito] = useState(false);
+
+  return (
+    <article>
+      <h2>{titulo}</h2>
+      <button onClick={() => setFavorito(valor => !valor)}>
+        {favorito ? 'Remover dos favoritos' : 'Favorito'}
+      </button>
+    </article>
+  );
+}
+
+
  return (
     <>
       <Header />
@@ -229,7 +417,61 @@ function App() {
             />
           ))}
         </section>
+          <section>
+            <Contador />
+          </section>
 
+          <section>
+             <div>
+                <h1>Exemplo de useState</h1>
+
+                <p>Contador: {contador}</p>
+
+                <button onClick={aumentar}>
+                  Aumentar
+                </button>
+
+                <button onClick={diminuir}>
+                  Diminuir
+                </button>
+              </div>
+          </section>
+          <section>
+            <Detalhes />
+          </section>
+          <section>
+            <Categorias />
+          </section>
+          <section>
+          {CORE_CONCEPTS.map((concept) => (
+              <button className="botao-aula13" key={concept.title}
+              onClick={() => setSelecionado(concept)}>
+              {concept.title}
+          </button>
+      ))}
+      {selecionado && <p>{selecionado.description}</p>}
+
+          </section>
+          <section> 
+            <CartaoFavorito titulo="Museu da Cidade" />
+          </section>
+
+        <section>
+          <FormularioConteudo0 />
+        </section>
+
+
+
+          <section>
+            <FormularioConteudo />
+          </section>
+
+          <section>
+            <FormularioMultimedia />
+          </section>
+          <section>
+            <CatalogoMultimedia />
+          </section>
       </main>
     </>
   );

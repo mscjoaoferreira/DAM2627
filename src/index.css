@@ -148,3 +148,51 @@ main h2 {
 #tab-content code {
   font-size: 1rem;
 }
+
+/* Estilo exclusivo dos botões da Aula 13 */
+
+.botao-aula13 {
+  background: linear-gradient(135deg, #8b5cf6, #6d28d9);
+  color: white;
+
+  border: 1px solid rgba(255, 255, 255, 0.15);
+  border-radius: 10px;
+
+  padding: 12px 20px;
+  margin: 5px;
+
+  font-size: 16px;
+  font-weight: 600;
+  font-family: inherit;
+
+  cursor: pointer;
+
+  box-shadow: 0 4px 12px rgba(0, 0, 0, 0.2);
+
+  transition:
+    background 0.3s ease,
+    transform 0.2s ease,
+    box-shadow 0.2s ease;
+}
+
+.botao-aula13:hover {
+  background: linear-gradient(135deg, #a78bfa, #7c3aed);
+  transform: translateY(-2px);
+  box-shadow: 0 6px 18px rgba(139, 92, 246, 0.4);
+}
+
+.botao-aula13:active {
+  transform: scale(0.96);
+}
+
+.botao-aula13:focus-visible {
+  outline: 3px solid #c4b5fd;
+  outline-offset: 3px;
+}
+
+.botao-aula13:disabled {
+  background: #555;
+  opacity: 0.5;
+  cursor: not-allowed;
+  transform: none;
+}
