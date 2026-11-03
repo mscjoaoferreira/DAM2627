@@ -178,7 +178,260 @@ function FormularioConteudo() {
   );
 }
 
+
+function FormularioSimples() {
+  function guardar(event) {
+    event.preventDefault();
+    alert("Formulário submetido!");
+  }
+
+  return (
+    <form onSubmit={guardar}>
+      <input placeholder="Título" />
+      <button type="submit">Guardar</button>
+    </form>
+  );
+}
+
+
+function CatalogoMultimedia() {
+
+  // ==========================================
+  // AULA 14 — ESTADOS DO FORMULÁRIO
+  // ==========================================
+  const [titulo, setTitulo] = useState("");
+  const [tipo, setTipo] = useState("Filme");
+  const [descricao, setDescricao] = useState("");
+  // ==========================================
+  // ETAPA 1 — INSERÇÃO DE CONTEÚDOS
+  // ==========================================
+  // Estado que guarda todos os conteúdos
+  const [conteudos, setConteudos] = useState([]);
+  // Função que adiciona um novo conteúdo
+  function adicionarConteudo(event) {
+    // Impede o recarregamento da página
+    event.preventDefault();
+    // Verifica se o título foi preenchido
+    if (titulo.trim() === "") {
+      alert("Introduza um título.");
+      return;
+    }
+    // Cria um objeto com os dados do formulário
+    const novoConteudo = {
+      id: crypto.randomUUID(),
+      titulo: titulo.trim(),
+      tipo: tipo,
+      descricao: descricao
+    };
+
+    // Adiciona o objeto à lista existente
+    setConteudos((anteriores) => [
+      ...anteriores,
+      novoConteudo
+    ]);
+    // Limpa os campos após a submissão
+    setTitulo("");
+    setTipo("Filme");
+    setDescricao("");
+  }
+
+  // ==========================================
+  // ETAPA 2 — EXCLUSÃO DE CONTEÚDOS
+  // ==========================================
+
+  // NOVO: função para remover um conteúdo
+  function removerConteudo(id) {
+    setConteudos((anteriores) =>
+      anteriores.filter((item) => item.id !== id)
+    );
+  }
+
+
+  // ==========================================
+  // ETAPA 3 — PESQUISA DE CONTEÚDOS
+  // ==========================================
+
+  // NOVO: estado para guardar o texto pesquisado
+  const [pesquisa, setPesquisa] = useState("");
+
+  // NOVO: lista filtrada pelo título
+  const resultados = conteudos.filter((item) =>
+    item.titulo
+      .toLowerCase()
+      .includes(pesquisa.toLowerCase())
+  );
+
+
+  // ==========================================
+  // INTERFACE DA APLICAÇÃO
+  // ==========================================
+
+  return (
+    <section>
+      <h2>Catálogo multimédia</h2>
+      {/* =====================================
+          ETAPA 1 — FORMULÁRIO DE INSERÇÃO
+          ===================================== */}
+      <form onSubmit={adicionarConteudo}>
+
+        <label htmlFor="titulo">Título:</label>
+        <input
+          id="titulo"
+          type="text"
+          value={titulo}
+          onChange={(event) =>
+            setTitulo(event.target.value)
+          }
+        />
+
+        <br />
+
+        <label htmlFor="tipo">Tipo:</label>
+
+        <select
+          id="tipo"
+          value={tipo}
+          onChange={(event) =>
+            setTipo(event.target.value)
+          }
+        >
+          <option value="Filme">Filme</option>
+          <option value="Série">Série</option>
+          <option value="Jogo">Jogo</option>
+          <option value="Livro">Livro</option>
+        </select>
+
+        <br />
+
+        <label htmlFor="descricao">
+          Descrição:
+        </label>
+
+        <textarea
+          id="descricao"
+          value={descricao}
+          onChange={(event) =>
+            setDescricao(event.target.value)
+          }
+        />
+          {/* =====================================
+          ETAPA 1 — Botão de submissão do formulário
+          ===================================== */}
+        <br />
+
+        <button type="submit">
+          Adicionar conteúdo
+        </button>
+
+      </form>
+
+
+      {/* =====================================
+          AULA 14 — PRÉ-VISUALIZAÇÃO
+          ===================================== */}
+
+      <h3>Pré-visualização</h3>
+
+      <p>Título: {titulo}</p>
+      <p>Tipo: {tipo}</p>
+      <p>Descrição: {descricao}</p>
+
+
+      {/* =====================================
+          ETAPA 3 — CAMPO DE PESQUISA
+          ===================================== */}
+
+      <h3>Pesquisar conteúdos</h3>
+
+      <input
+        type="text"
+        value={pesquisa}
+        onChange={(event) =>
+          setPesquisa(event.target.value)
+        }
+        placeholder="Pesquisar pelo título"
+      />
+
+
+      {/* =====================================
+          ETAPA 1 — LISTA DE CONTEÚDOS
+          ===================================== */}
+
+      <h3>Conteúdos adicionados</h3>
+      {/* Mensagem quando não existem conteúdos */}
+      {conteudos.length === 0 && (
+        <p>Ainda não existem conteúdos.</p>
+      )}
+      {/* ETAPA 3: mensagem sem resultados */}
+      {conteudos.length > 0 &&
+        resultados.length === 0 && (
+          <p>Nenhum conteúdo encontrado.</p>
+        )
+      }
+      <ul>
+        {/* ETAPA 3: usar resultados.map()
+            em vez de conteudos.map() */}
+        {resultados.map((conteudo) => (
+          <li key={conteudo.id}>
+            <hr />
+            <h4>{conteudo.titulo}</h4>
+            <p>Tipo: {conteudo.tipo}</p>
+            <p>{conteudo.descricao}</p>
+
+            {/* ETAPA 2 — BOTÃO REMOVER */}
+            <button
+              type="button"
+              onClick={() =>
+                removerConteudo(conteudo.id)
+              }
+            >
+              Remover
+            </button>
+          </li>
+        ))}
+      </ul>
+    </section>
+  );
+}
+
+
+
 function App() {
+
+const [titulo, setTitulo] = useState("");
+const [tipo, setTipo] = useState("Filme");
+const [descricao, setDescricao] = useState("");
+
+// NOVO: coleção de conteúdos
+const [conteudos, setConteudos] = useState([]);
+
+const novoConteudo = {
+  id: crypto.randomUUID(),
+  titulo: titulo.trim(),
+  tipo: tipo,
+  descricao: descricao
+};
+
+function adicionarConteudo(event) {
+  event.preventDefault();
+
+  if (titulo.trim() === "") {
+    alert("Introduza um título.");
+    return;
+  }
+
+  const novoConteudo = {
+    id: crypto.randomUUID(),
+    titulo: titulo.trim(), tipo, descricao
+  };
+
+  setConteudos((anteriores) => [...anteriores, novoConteudo]);
+  setTitulo(""); setTipo("Filme"); setDescricao("");
+}
+
+
+
+
 
   function FormularioConteudo0() {
   return (
@@ -238,49 +491,7 @@ function FormularioMultimedia() {
   );
 }
 
-function CatalogoMultimedia() {
-  const [titulo, setTitulo] = useState("");
-  const [tipo, setTipo] = useState("Filme");
-  const [descricao, setDescricao] = useState("");
 
-  return (
-    <section>
-      <h2>Catálogo multimédia</h2>
-
-      <label htmlFor="titulo">Título:</label>
-      <input
-        id="titulo"
-        type="text"
-        value={titulo}
-        onChange={(event) => setTitulo(event.target.value)}
-      />
-
-      <label htmlFor="tipo">Tipo:</label>
-      <select
-        id="tipo"
-        value={tipo}
-        onChange={(event) => setTipo(event.target.value)}
-      >
-        <option value="Filme">Filme</option>
-        <option value="Série">Série</option>
-        <option value="Jogo">Jogo</option>
-        <option value="Livro">Livro</option>
-      </select>
-
-      <label htmlFor="descricao">Descrição:</label>
-      <textarea
-        id="descricao"
-        value={descricao}
-        onChange={(event) => setDescricao(event.target.value)}
-      />
-
-      <h3>Pré-visualização</h3>
-      <p>Título: {titulo}</p>
-      <p>Tipo: {tipo}</p>
-      <p>Descrição: {descricao}</p>
-    </section>
-  );
-}
 
 //Para uso do useState
   const [contador, setContador] = useState(0);
@@ -472,6 +683,12 @@ function CartaoFavorito({ titulo }) {
           <section>
             <CatalogoMultimedia />
           </section>
+
+          <section>
+            <h1>Formulário Simples - Aula 15</h1>
+            <FormularioSimples />
+          </section>
+
       </main>
     </>
   );
