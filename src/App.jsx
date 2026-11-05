@@ -207,6 +207,8 @@ function CatalogoMultimedia() {
   // ==========================================
   // Estado que guarda todos os conteúdos
   const [conteudos, setConteudos] = useState([]);
+
+
   // Função que adiciona um novo conteúdo
   function adicionarConteudo(event) {
     // Impede o recarregamento da página
@@ -234,23 +236,18 @@ function CatalogoMultimedia() {
     setTipo("Filme");
     setDescricao("");
   }
-
   // ==========================================
   // ETAPA 2 — EXCLUSÃO DE CONTEÚDOS
   // ==========================================
-
   // NOVO: função para remover um conteúdo
   function removerConteudo(id) {
     setConteudos((anteriores) =>
       anteriores.filter((item) => item.id !== id)
     );
   }
-
-
   // ==========================================
   // ETAPA 3 — PESQUISA DE CONTEÚDOS
   // ==========================================
-
   // NOVO: estado para guardar o texto pesquisado
   const [pesquisa, setPesquisa] = useState("");
 
@@ -336,13 +333,10 @@ function CatalogoMultimedia() {
       <p>Tipo: {tipo}</p>
       <p>Descrição: {descricao}</p>
 
-
       {/* =====================================
           ETAPA 3 — CAMPO DE PESQUISA
           ===================================== */}
-
       <h3>Pesquisar conteúdos</h3>
-
       <input
         type="text"
         value={pesquisa}
@@ -362,6 +356,8 @@ function CatalogoMultimedia() {
       {conteudos.length === 0 && (
         <p>Ainda não existem conteúdos.</p>
       )}
+
+
       {/* ETAPA 3: mensagem sem resultados */}
       {conteudos.length > 0 &&
         resultados.length === 0 && (
@@ -370,7 +366,7 @@ function CatalogoMultimedia() {
       }
       <ul>
         {/* ETAPA 3: usar resultados.map()
-            em vez de conteudos.map() */}
+            em vez de conteudos.map() 
         {resultados.map((conteudo) => (
           <li key={conteudo.id}>
             <hr />
@@ -378,7 +374,7 @@ function CatalogoMultimedia() {
             <p>Tipo: {conteudo.tipo}</p>
             <p>{conteudo.descricao}</p>
 
-            {/* ETAPA 2 — BOTÃO REMOVER */}
+            {/* ETAPA 2 — BOTÃO REMOVER 
             <button
               type="button"
               onClick={() =>
@@ -387,14 +383,55 @@ function CatalogoMultimedia() {
             >
               Remover
             </button>
+
           </li>
         ))}
+*/}
+        
+
+        {/* =====================================
+      ETAPA 4 — NOVO COMPONENTE
+      Substitui o código anterior
+      ===================================== */}
+
+        {resultados.map((conteudo) => (
+          <ItemConteudo
+            key={conteudo.id}
+            conteudo={conteudo}
+            onRemover={removerConteudo}
+          />
+        ))}
+
+          {/*=====================================
+                ETAPA 4 — FIM
+          ===================================== */}
+
       </ul>
     </section>
   );
 }
 
 
+
+function ItemConteudo({ conteudo, onRemover }) {
+  return (
+    <li>
+      <hr />
+
+      <h4>{conteudo.titulo}</h4>
+      <p>Tipo: {conteudo.tipo}</p>
+      <p>{conteudo.descricao}</p>
+
+      {/* Botão Remover da Etapa 2 */}
+      <button
+        type="button"
+        onClick={() => onRemover(conteudo.id)}
+      >
+        Remover
+      </button>
+    </li>
+  );
+}
 
 function App() {
 
